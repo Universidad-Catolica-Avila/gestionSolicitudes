@@ -1,0 +1,117 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveForm()">
+
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+
+            <!-- Name -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nombre y Apellidos</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:user'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'nombre'"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+            <!-- Email -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Email</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:mail'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'email'"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+            <!-- Phone -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Teléfono</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:phone'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'telefono'"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+            <!-- Role -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Rol</mat-label>
+                    <mat-select [formControlName]="'rolId'">
+                        <mat-option [value]="2">Usuario</mat-option>
+                        <mat-option [value]="1">Administrador</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <!-- Password -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Password</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'password'"
+                        type="password"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+            <!-- Rep. Password -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Repetir password</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'password2'"
+                        type="password"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+
+
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <button
+                (click)="cancel()"
+                mat-stroked-button
+                type="button">
+                Cancelar
+            </button>
+            <button
+                [disabled]="!form.valid"
+                type="submit"
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'">Guardar
+            </button>
+        </div>
+    </form>
+
+</div>

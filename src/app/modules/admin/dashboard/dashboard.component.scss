@@ -1,0 +1,73 @@
+.gestion-cpd {
+    .stats {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        justify-content: center;
+
+        .stat {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;       // Ancho fijo
+            height: 250px;      // Altura fija para uniformidad
+
+            h4 {
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+
+            img {
+                width: 80px;
+                height: auto;
+                margin-top: 50px;
+                display: block;
+            }
+        }
+    }
+
+    .update-section {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+
+        .stat.small {
+            width: 200px;       // Misma anchura que las otras tarjetas
+            height: 250px;      // Misma altura que las otras tarjetas
+            padding: 10px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h4 {
+                font-size: 1em;
+            }
+
+            p {
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+
+            img {
+                width: 50px;
+                height: auto;
+                margin-top: 5px;
+                display: block;
+            }
+        }
+    }
+}
