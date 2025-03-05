@@ -51,9 +51,12 @@
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Rol</mat-label>
-                    <mat-select [formControlName]="'rolId'">
-                        <mat-option [value]="2">Usuario</mat-option>
+                    <mat-select [formControlName]="'rolId'">                        
                         <mat-option [value]="1">Administrador</mat-option>
+                        <mat-option [value]="2">Profesor</mat-option>
+                        <mat-option [value]="3">Administrador Cultura Científica</mat-option>
+                        <mat-option [value]="4">Cultura Científica</mat-option>
+                        <mat-option [value]="5">Aprobador</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

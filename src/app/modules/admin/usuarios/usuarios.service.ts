@@ -38,11 +38,11 @@ export class UsuariosService
     }
 
     saveUsuario(data: any): Observable<any> {
-        return null;
+        return this.communicationService.apiPost('user', data);
     }
 
     updateUsuario(id: number, data: any): Observable<any> {
-        return null;
+        return this.communicationService.apiPut('user', data);
     }
 
     deleteUsuario(id: number): Observable<any> {

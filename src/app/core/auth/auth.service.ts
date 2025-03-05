@@ -4,12 +4,13 @@ import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { CommunicationService } from '../services/communication-service/communication.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService
 {
     private _authenticated: boolean = false;
-
+    private jwtHelper = new JwtHelperService();
     /**
      * Constructor
      */
@@ -197,4 +198,15 @@ export class AuthService
         // If the access token exists and it didn't expire, sign in using it
         return this.signInUsingToken();
     }
+
+   
+    
+    getRoles(): string[] {
+        const token = this.accessToken;
+        if (!token) return [];
+    
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        return decodedToken.roles || []; // ✅ Extrae los roles correctamente
+    }
+    
 }

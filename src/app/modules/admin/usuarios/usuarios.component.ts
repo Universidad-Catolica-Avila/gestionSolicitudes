@@ -31,15 +31,12 @@ export class UsuariosComponent implements OnInit {
     }
 
     goToUsuario(id: number): void {
-        //TODO PONER LA RUTA AL SERVICIO
-        
+        this.router.navigate([`usuarios/edit/${id}`]);
     }
 
     createUsuario(): void {
-        //TODO PONER LA RUTA AL SERVICIO
-        this.router.navigate(['']);
+        this.router.navigate(['usuarios/new']);
     }
-
 
     deleteUsuario(id: number): void {
         // Open the confirmation dialog

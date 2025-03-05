@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
         const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-        return this._check(redirectUrl);
+        return this._check(redirectUrl, route);
     }
 
     /**
@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
         const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-        return this._check(redirectUrl);
+        return this._check(redirectUrl, childRoute);
     }
 
     /**
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
     {
-        return this._check('/');
+        return this._check('/', route);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -62,31 +62,39 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Check the authenticated status
+     * Check the authenticated status and roles
      *
      * @param redirectURL
      * @private
      */
-    private _check(redirectURL: string): Observable<boolean>
+    private _check(redirectURL: string, route?: ActivatedRouteSnapshot | Route): Observable<boolean>
     {
-        // Check the authentication status
         return this._authService.check()
-                   .pipe(
-                       switchMap((authenticated) => {
+            .pipe(
+                switchMap((authenticated) => {
 
-                           // If the user is not authenticated...
-                           if ( !authenticated )
-                           {
-                               // Redirect to the sign-in page
-                               this._router.navigate(['sign-in'], {queryParams: {redirectURL}});
+                    // Si el usuario no está autenticado...
+                    if (!authenticated) {
+                        this._router.navigate(['sign-in'], { queryParams: { redirectURL } });
+                        return of(false);
+                    }
 
-                               // Prevent the access
-                               return of(false);
-                           }
+                    // Obtener los roles requeridos de la ruta
+                    const expectedRoles = route?.data?.['roles'] as number[] | undefined;
 
-                           // Allow the access
-                           return of(true);
-                       })
-                   );
+                    if (expectedRoles) {
+                        const userRoles = this._authService.getRoles();
+
+                        // Si el usuario no tiene uno de los roles requeridos, redirigir
+                        if (!userRoles.some(role => expectedRoles.includes(Number(role)))) {
+                            this._router.navigate(['/dashboard']); // Redirigir si no tiene acceso
+                            return of(false);
+                        }
+                    }
+
+                    // Permitir el acceso
+                    return of(true);
+                })
+            );
     }
 }
