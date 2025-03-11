@@ -17,6 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { SolicitudesComponent } from './modules/admin/solicitudes/solicitudes.component';
+import { AprobadoresComponent } from './modules/admin/aprobadores/aprobadores.component';
 
 
 const routerConfig: ExtraOptions = {

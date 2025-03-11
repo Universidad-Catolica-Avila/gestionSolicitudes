@@ -75,7 +75,8 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {path: 'usuarios', loadChildren: () => import('app/modules/admin/usuarios/usuarios.module').then(m => m.UsuariosModule)},
-            {path: 'dashboard', loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule)}
+            {path: 'dashboard', loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule)},
+            {path: 'solicitudes', loadChildren: () => import('app/modules/admin/solicitudes/solicitudes.module').then(m => m.SolicitudesModule)}
            
         ]
     }

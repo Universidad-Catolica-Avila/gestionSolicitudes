@@ -1,0 +1,49 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveForm()">
+
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+
+            <!-- Name -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nombre del evento</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:user'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'nombre'"
+                        matInput>
+                </mat-form-field>
+            </div>
+
+            
+
+        </div>
+
+
+
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <button
+                (click)="cancel()"
+                mat-stroked-button
+                type="button">
+                Cancelar
+            </button>
+            <button
+                [disabled]="!form.valid"
+                type="submit"
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'">Guardar
+            </button>
+        </div>
+    </form>
+
+</div>

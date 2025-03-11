@@ -3,24 +3,49 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id: 'main',
+        id: 'mainProfesor',
         title: 'Principal',
         type: 'group',
         roles: [1, 2],
         children: [
             {
-                id: 'gestionImagenes',
-                title: 'Gestión Imágenes SMOWL',
+                id: 'gestionSolicitudes',
+                title: 'Gestión Solicitudes',
                 type: 'collapsable', // Cambiado a 'collapsable' para permitir submenús
-                icon: 'heroicons_outline:identification',
+                icon: 'heroicons_outline:clipboard-list',
                 children: [
                    
                     {
-                        id: 'cargarDatos',
-                        title: 'Cargar Datos',
+                        id: 'listSolicitudes',
+                        title: 'Listado Solicitudes',
                         type: 'basic',
-                        icon: 'heroicons_outline:document-duplicate',
-                        link: '/'
+                        icon: 'heroicons_outline:check-circle',
+                        link: '/solicitudes'
+                    }
+                ]
+            }
+
+        ]
+    },
+    {
+        id: 'mainAdminCC',
+        title: 'Principal',
+        type: 'group',
+        roles: [3, 4],
+        children: [
+            {
+                id: 'gestionSolicitudes',
+                title: 'Gestión Solicitudes',
+                type: 'collapsable', // Cambiado a 'collapsable' para permitir submenús
+                icon: 'heroicons_outline:clipboard-list',
+                children: [
+                   
+                    {
+                        id: 'listSolicitudes',
+                        title: 'Listado Solicitudes',
+                        type: 'basic',
+                        icon: 'heroicons_outline:check-circle',
+                        link: '/solicitudes'
                     }
                 ]
             }
