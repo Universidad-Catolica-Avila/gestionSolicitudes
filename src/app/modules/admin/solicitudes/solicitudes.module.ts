@@ -18,6 +18,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { FuseAlertModule } from '@fuse/components/alert';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes: Route[] = [
     {
@@ -43,21 +47,25 @@ const routes: Route[] = [
   ],
   imports: [
     CommonModule,
-        MatTableModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatSidenavModule,
-        MatSlideToggleModule,
-        RouterModule.forChild(routes),
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        FuseAlertModule
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    RouterModule.forChild(routes),
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    FuseAlertModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule 
   ],
   exports: [
     SolicitudesComponent

@@ -51,7 +51,7 @@ export class SolicitudFormComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
     this._fuseLoadingService.show();
-    this.form.controls.username.setValue(this.form.controls.email.value);
+    //this.form.controls.username.setValue(this.form.controls.email.value);
     this.save.emit(this.form.value);
   }
 
