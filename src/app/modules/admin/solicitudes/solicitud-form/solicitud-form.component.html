@@ -6,21 +6,203 @@
         <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
 
             <!-- Name -->
-            <div class="sm:col-span-2">
+            <div class="sm:col-span-4">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Nombre del evento</mat-label>
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:user'"
-                        matPrefix></mat-icon>
-                    <input
-                        [formControlName]="'nombre'"
-                        matInput>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bookmark'" matPrefix></mat-icon>
+                    <input [formControlName]="'nombre'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nombre del responsable de la actividad</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon>
+                    <input [formControlName]="'nombreResponsable'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Tipo de evento y duración</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:beaker'" matPrefix></mat-icon>
+                    <mat-select formControlName="tipoEvento" (selectionChange)="onTipoEventoChange($event.value)">
+                        <mat-option *ngFor="let item of datosTablaTiposEvento" [value]="item.id">
+                            {{ item.descripcion }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
 
-            
+            <!-- Campo de texto solo si el usuario selecciona "Otro" -->
+            <div class="sm:col-span-4" *ngIf="mostrarOtroCampoEvento">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Especificar otro tipo de evento</mat-label>
+                    <input matInput formControlName="otroTipoEvento">
+                </mat-form-field>
+            </div>
+            <!-- Solo se muestra si hay fechas -->
+            <div class="sm:col-span-4">
+                <mat-label>Fechas de realización. </mat-label>
+                <p class="text-gray-600 text-sm italic">
+                    Sujeto a disponibilidad.
+                </p>
 
+                <div formArrayName="fechas">
+                    <div *ngFor="let fecha of fechas.controls; let i = index" class="flex items-center gap-4 mt-2">
+                        <mat-form-field class="fuse-mat-no-subscript w-1/3 min-w-[200px]">
+                            <input matInput [matDatepicker]="picker" [formControlName]="i">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <!-- Botón de eliminar -->
+                        <button mat-icon-button color="warn" (click)="eliminarFecha(i)" *ngIf="fechas.length > 1">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botón de agregar fecha (deshabilitado si la última fecha está vacía) -->
+                <div class="mt-2">
+                    <button mat-button color="primary" (click)="agregarFecha()" type="button"
+                        [disabled]="!ultimaFechaValida()">
+                        <mat-icon>add</mat-icon> Agregar Fecha
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="sm:col-span-4">
+                <mat-label>Programa del evento</mat-label>
+                <p class="text-gray-600 text-sm italic">
+                    Escriba el horario, nombre de la ponencia, autor y el tratamiento del mismo (Sra./Sr., Dra./Dr.).
+                </p>
+
+                <div formArrayName="ponencias">
+                    <div *ngFor="let ponencia of ponencias.controls; let i = index" [formGroupName]="i" class="space-y-2 mt-2">
+                        
+                        <!-- Primera fila: Horario y Nombre de la Ponencia -->
+                        <div class="grid grid-cols-2 lg:grid-cols-2 gap-4">
+                            <mat-form-field>
+                                <mat-icon matPrefix>schedule</mat-icon>
+                                <input matInput placeholder="Horario" formControlName="horario">
+                            </mat-form-field>
+                
+                            <mat-form-field class="w-full">
+                                <mat-icon matPrefix>book</mat-icon>
+                                <input matInput placeholder="Nombre de la ponencia" formControlName="nombre">
+                            </mat-form-field>
+                        </div>
+                
+                        <!-- Segunda fila: Autor y Tratamiento -->
+                        <div class="grid grid-cols-2 lg:grid-cols-2 gap-4">
+                            <mat-form-field >
+                                <mat-icon matPrefix>assignment_ind</mat-icon>
+                                <mat-select placeholder="Tratamiento" formControlName="tratamiento">
+                                    <mat-option value="Sr.">Sr.</mat-option>
+                                    <mat-option value="Sra.">Sra.</mat-option>
+                                    <mat-option value="Dr.">Dr.</mat-option>
+                                    <mat-option value="Dra.">Dra.</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="w-full">
+                                <mat-icon matPrefix>person</mat-icon>
+                                <input matInput placeholder="Autor" formControlName="autor">
+                            </mat-form-field>
+                
+                           
+                        </div>
+                
+                        <!-- Botón de eliminar alineado a la derecha -->
+                        <div class="flex justify-end">
+                            <button mat-icon-button color="warn" (click)="eliminarPonencia(i)" *ngIf="ponencias.length > 1">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Botón de agregar ponencia -->
+                <div>
+                    <button mat-button color="primary" (click)="agregarPonencia()" type="button"
+                        [disabled]="!ultimaPonenciaValida()">
+                        <mat-icon>add</mat-icon> Agregar otra ponencia
+                    </button>
+                </div>
+            </div>
+
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Facultad, Grupo de Investigación, Cátedra o Decanato</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:academic-cap'" matPrefix></mat-icon>
+                    <input [formControlName]="'tipoOrganizador'" matInput>
+                </mat-form-field>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Organismos Colaboradores</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:users'" matPrefix></mat-icon>
+                    <input [formControlName]="'organismosColaboradores'" matInput>
+                </mat-form-field>
+            </div>
+            
+            <div class="sm:col-span-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Formato del evento -->
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Formato del evento</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:globe-alt'" matPrefix></mat-icon>
+                        <mat-select [formControlName]="'formato'">
+                            <mat-option [value]="item.id" *ngFor="let item of datosTablaFormatos">
+                                {{ item.descripcion }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            
+                    <!-- Lugar de realización -->
+                    <mat-form-field class="fuse-mat-no-subscript w-full">
+                        <mat-label>Lugar de realización</mat-label>
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:office-building'" matPrefix></mat-icon>
+                        <mat-select [formControlName]="'lugar'">
+                            <mat-option [value]="item.id" *ngFor="let item of datosTablaLocalizaciones">
+                                {{ item.descripcion }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Necesidades de soporte informático</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:desktop-computer'" matPrefix></mat-icon>
+                    <mat-select formControlName="soporte" >
+                        <mat-option *ngFor="let item of datosTablaSoportes" [value]="item.id">
+                            {{ item.descripcion }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Necesidad de expedir certificado</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:badge-check'" matPrefix></mat-icon>
+                    <mat-select formControlName="certificado" >
+                        <mat-option *ngFor="let item of datosTablaCertificados" [value]="item.id">
+                            {{ item.descripcion }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>   
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Necesidades de comunicación y difusión</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:wifi'" matPrefix></mat-icon>
+                    <mat-select formControlName="certificado" >
+                        <mat-option *ngFor="let item of datosTablaDifusiones" [value]="item.id">
+                            {{ item.descripcion }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>                       
         </div>
 
 
@@ -30,18 +212,10 @@
 
         <!-- Actions -->
         <div class="flex items-center justify-end">
-            <button
-                (click)="cancel()"
-                mat-stroked-button
-                type="button">
+            <button (click)="cancel()" mat-stroked-button type="button">
                 Cancelar
             </button>
-            <button
-                [disabled]="!form.valid"
-                type="submit"
-                class="ml-4"
-                mat-flat-button
-                [color]="'primary'">Guardar
+            <button [disabled]="!form.valid" type="submit" class="ml-4" mat-flat-button [color]="'primary'">Guardar
             </button>
         </div>
     </form>

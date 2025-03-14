@@ -1,0 +1,25 @@
+
+.fechas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .fecha-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .fecha-input {
+    width: 150px; /* Ajusta el tamaño del campo de fecha */
+  }
+
+  
+
+  label, mat-label, p, .mat-form-field-label {
+    color: rgba(30,41,59, 1) !important;
+  }
+  
+
+  

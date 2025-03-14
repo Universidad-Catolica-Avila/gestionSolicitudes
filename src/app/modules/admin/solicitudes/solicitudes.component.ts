@@ -46,4 +46,5 @@ export class SolicitudesComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
        
       }
+      
 }

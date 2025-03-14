@@ -22,6 +22,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const routes: Route[] = [
     {
@@ -55,8 +56,10 @@ const routes: Route[] = [
     MatRadioModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatMomentDateModule,
     MatSidenavModule,
+    MatDatepickerModule,
     MatCheckboxModule,
     MatSlideToggleModule,
     RouterModule.forChild(routes),
